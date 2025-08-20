@@ -1,19 +1,18 @@
 import express from 'express';
+import cors from 'cors';
 import patientRoutes from './routes/patientRoutes';
 import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
 
+// Middleware
+app.use(cors());
 app.use(express.json());
 
 // Routes
-app.get('/', (req, res) => {
-    res.send('get the index file');
-})
-
 app.use('/patients', patientRoutes);
 
-// Global error handler (should be after routes)
+// Error handler
 app.use(errorHandler);
 
 export default app;

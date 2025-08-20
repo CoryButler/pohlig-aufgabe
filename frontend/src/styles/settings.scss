@@ -1,0 +1,174 @@
+/**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+// https://vuetifyjs.com/features/sass-variables/`
+
+@import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@400..700&family=Fjalla+One&display=swap');
+
+:root {
+    --v-theme-primary: #023167;
+    --v-theme-secondary: #4a4a50;
+    --v-theme-tertiary: #1a3351;
+    --v-theme-accent: #ffa928;
+    --v-theme-info: #20a2f0;
+    --v-theme-success: #0aa669;
+    --v-theme-warning: #ff9b00;
+    --v-theme-surface: #d9d9dd;
+    --v-theme-surfaceLight: #eeeef2;
+    --v-theme-surfaceDark: #b9b9bc;
+    --v-theme-surfaceEdgeTop: #fdfdff;
+    --v-theme-surfaceEdgeRight: #c6c6c8;
+    --v-theme-surfaceEdgeBottom: #b4b4b6;
+    --v-theme-surfaceEdgeLeft: #e4e4e9;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background: var(--v-theme-surfaceLight);
+}
+
+a {
+    text-decoration: none;
+}
+
+.brand-font {
+    font-family: "Alkatra", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.font-fjalla-one {
+    font-family: "Fjalla One", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.mea-culpa-regular {
+    font-family: "Mea Culpa", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.meow-script-regular {
+    font-family: "Meow Script", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.color-primary {
+    color: var(--v-theme-primary);
+}
+
+.color-secondary {
+    color: var(--v-theme-secondary);
+}
+
+.color-surfaceDark {
+    color: var(--v-theme-surfaceDark);
+}
+
+.color-tertiary {
+    color: var(--v-theme-tertiary);
+}
+
+.color-error {
+    color: var(--v-theme-error);
+}
+
+.color-info {
+    color: var(--v-theme-info);
+}
+
+.color-success {
+    color: var(--v-theme-success);
+}
+
+.error-message {
+    color: var(--v-theme-error);
+    font-style: italic;
+}
+
+.info-message {
+    color: var(--v-theme-info);
+    font-style: italic;
+}
+
+.success-message {
+    color: var(--v-theme-success);
+    font-style: italic;
+}
+
+.preview {
+    background: linear-gradient(darkslateblue -100%, white 50%);
+}
+
+.emboss {
+    border-bottom: 1px solid var(--v-theme-surfaceEdgeBottom);
+    border-left: 1px solid var(--v-theme-surfaceEdgeLeft);
+    border-top: 1px solid var(--v-theme-surfaceEdgeTop);
+    border-right: 1px solid var(--v-theme-surfaceEdgeRight);
+}
+
+.engrave {
+    border-top: 1px solid var(--v-theme-surfaceEdgeBottom);
+    border-right: 1px solid var(--v-theme-surfaceEdgeLeft);
+    border-bottom: 1px solid var(--v-theme-surfaceEdgeTop);
+    border-left: 1px solid var(--v-theme-surfaceEdgeRight);
+    overflow: hidden;
+}
+
+  /************/
+ /* VTabItem */
+/************/
+
+.v-tab {
+    color: var(--v-theme-tertiary) !important;
+}
+
+.v-tab-item--selected {
+    background: linear-gradient(90deg, var(--v-theme-surfaceDark), transparent 50%) !important;
+}
+
+  /********************/
+ /* VDataTableServer */
+/********************/
+
+.v-data-table {
+    border-radius: 0 !important;
+}
+
+.v-data-table-header__content span {
+    font-weight: bold;
+}
+
+.v-data-table__th {
+    background: var(--v-theme-surfaceDark) !important;
+    height: 32px !important;
+}
+
+  /***************/
+ /* Transitions */
+/***************/
+
+.page-leave-active,
+.page-enter-active {
+   transition: 100ms all ease;
+}
+
+.page-enter-from {
+    transform: scale(1.1);
+    opacity: 0;
+ }
+
+.page-leave-to {
+   transform: scale(0.9);
+   opacity: 0;
+}
