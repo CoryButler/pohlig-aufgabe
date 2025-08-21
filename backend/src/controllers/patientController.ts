@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import { patients, Patient } from '../models/patient';
+import { initPrimaryKey, patients, type Patient } from '../models/patient';
 
 /*********************/
 /* Private variables */
 /*********************/
 
+let _primaryKey: number = initPrimaryKey;
 const msg_id_required: string = 'Patient ID is required';
 const msg_missing_field: string = 'Missing required field(s): ';
 const msg_not_found: string = 'Patient not found';
@@ -22,6 +23,7 @@ const stati: { [key: string]: number } = Object.freeze({
 
 /**
  * Validate the required fields in the request body.
+ * 
  * @param req The request object.
  * @param res The response object.
  * @returns True if all required fields are present, otherwise false.
@@ -48,6 +50,7 @@ function validFields(req: Request, res: Response): boolean {
 
 /**
  * Validate the required parameters in the request.
+ * 
  * @param req The request object.
  * @param res The response object.
  * @returns True if all required parameters are present, otherwise false.
@@ -64,6 +67,7 @@ function validParams(req: Request, res: Response): boolean {
 
 /**
  * Validate the patient ID.
+ * 
  * @param id The patient ID.
  * @param res The response object.
  * @returns True if the ID is valid, otherwise false.
@@ -92,7 +96,7 @@ export const createPatient = (req: Request, res: Response, next: NextFunction): 
 
     // Build patient object with next available id
     const patient: Patient = {
-      id: Math.max(...patients.map(p => p.id), 0) + 1,
+      id: _primaryKey++,
       birthdate: birthdate,
       firstName: firstName,
       lastName: lastName,

@@ -1,29 +1,5 @@
-/**
- * src/styles/settings.scss
- *
- * Configures SASS variables and Vuetify overwrites
- */
-
-// https://vuetifyjs.com/features/sass-variables/`
-
 @import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@400..700&family=Fjalla+One&display=swap');
 
-:root {
-    --v-theme-primary: #023167;
-    --v-theme-secondary: #4a4a50;
-    --v-theme-tertiary: #1a3351;
-    --v-theme-accent: #ffa928;
-    --v-theme-info: #20a2f0;
-    --v-theme-success: #0aa669;
-    --v-theme-warning: #ff9b00;
-    --v-theme-surface: #d9d9dd;
-    --v-theme-surfaceLight: #eeeef2;
-    --v-theme-surfaceDark: #b9b9bc;
-    --v-theme-surfaceEdgeTop: #fdfdff;
-    --v-theme-surfaceEdgeRight: #c6c6c8;
-    --v-theme-surfaceEdgeBottom: #b4b4b6;
-    --v-theme-surfaceEdgeLeft: #e4e4e9;
-}
 
 html {
     height: 100%;
@@ -64,11 +40,11 @@ a {
 }
 
 .color-primary {
-    color: var(--v-theme-primary);
+    color: rgb(var(--v-theme-primary));
 }
 
 .color-secondary {
-    color: var(--v-theme-secondary);
+    color: rgb(var(--v-theme-secondary));
 }
 
 .color-surfaceDark {
@@ -76,33 +52,37 @@ a {
 }
 
 .color-tertiary {
-    color: var(--v-theme-tertiary);
+    color: rgb(var(--v-theme-tertiary));
 }
 
 .color-error {
-    color: var(--v-theme-error);
+    color: rgb(var(--v-theme-error));
 }
 
 .color-info {
-    color: var(--v-theme-info);
+    color: rgb(var(--v-theme-info));
 }
 
 .color-success {
-    color: var(--v-theme-success);
+    color: rgb(var(--v-theme-success));
+}
+
+.color-warning {
+    color: rgb(var(--v-theme-warning));
 }
 
 .error-message {
-    color: var(--v-theme-error);
+    color: rgb(var(--v-theme-error));
     font-style: italic;
 }
 
 .info-message {
-    color: var(--v-theme-info);
+    color: rgb(var(--v-theme-info));
     font-style: italic;
 }
 
 .success-message {
-    color: var(--v-theme-success);
+    color: rgb(var(--v-theme-success));
     font-style: italic;
 }
 
@@ -111,17 +91,17 @@ a {
 }
 
 .emboss {
-    border-bottom: 1px solid var(--v-theme-surfaceEdgeBottom);
-    border-left: 1px solid var(--v-theme-surfaceEdgeLeft);
-    border-top: 1px solid var(--v-theme-surfaceEdgeTop);
-    border-right: 1px solid var(--v-theme-surfaceEdgeRight);
+    border-bottom: 1px solid rgb(var(--v-theme-surfaceEdgeBottom));
+    border-left: 1px solid rgb(var(--v-theme-surfaceEdgeLeft));
+    border-top: 1px solid rgb(var(--v-theme-surfaceEdgeTop));
+    border-right: 1px solid rgb(var(--v-theme-surfaceEdgeRight));
 }
 
 .engrave {
-    border-top: 1px solid var(--v-theme-surfaceEdgeBottom);
-    border-right: 1px solid var(--v-theme-surfaceEdgeLeft);
-    border-bottom: 1px solid var(--v-theme-surfaceEdgeTop);
-    border-left: 1px solid var(--v-theme-surfaceEdgeRight);
+    border-top: 1px solid rgb(var(--v-theme-surfaceEdgeBottom));
+    border-right: 1px solid rgb(var(--v-theme-surfaceEdgeLeft));
+    border-bottom: 1px solid rgb(var(--v-theme-surfaceEdgeTop));
+    border-left: 1px solid rgb(var(--v-theme-surfaceEdgeRight));
     overflow: hidden;
 }
 

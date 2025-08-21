@@ -3,22 +3,47 @@
         "cancel": "Cancel",
         "close": "Close",
         "delete": "Delete",
+        "details": "Details",
         "edit": "Edit",
+        "logOut": "Log Out",
         "newPatient": "New Patient",
         "ok": "OK"
     },
-    "headings": {
-        "editPatient": "Edit Patient",
-        "newPatient": "New Patient"
+    "dataTable": {
+        "itemsPerPage": "Items per page",
+        "pageText": "{0}-{1} of {2}"
     },
     "fields": {
+        "age": "Age",
         "birthdate": "Birthdate",
         "firstName": "First Name",
         "lastName": "Last Name",
+        "patientId": "Patient ID",
         "sex": "Sex"
+    },
+    "headings": {
+        "deletePatient": "Delete Patient",
+        "editPatient": "Edit Patient",
+        "newPatient": "New Patient",
+        "patientList": "Patient List"
+    },
+    "labels": {
+        "darkMode": "Dark Mode",
+        "language": "Language",
+        "patientServices": "Patient Services"
     },
     "language": {
         "en": "English",
         "de": "Deutsch"
+    },
+    "sexes": {
+        "male": "Male",
+        "female": "Female"
+    },
+    "units": {
+        "years": "yr."
+    },
+    "messages": {
+        "deletePatient": "Are you sure you want to delete this patient?"
     }
 }

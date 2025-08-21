@@ -1,14 +1,17 @@
 <script setup lang="ts">
     import { useAppStore } from '@/stores/app';
-    import { usePatientStore } from '@/stores/patient';
-    import type { Patient } from '@/stores/types';
+    import { usePatientStore, type Patient } from '@/stores/patient';
+    import DatePicker from '@/components/DatePicker.vue';
+    import { useFormRules } from '@/composables/useFormRules';
+    import { getAge } from '@/utils/helper';
 
     /* Store variables */
     const appStore = useAppStore();
-    const { isMobile, txt, userLang } = storeToRefs(appStore);
+    const { txt, userLang } = storeToRefs(appStore);
     const patientStore = usePatientStore();
-    const { isPending, patient } = storeToRefs(patientStore);
-    const { createPatient, updatePatient } = patientStore;
+    const { isPending, patient, sexes } = storeToRefs(patientStore);
+    const { createPatient, readPatientById, updatePatient } = patientStore;
+    const { positiveInt, positiveFloat, required } = useFormRules();
 
     const state = reactive({
         resolve: (val: boolean) => {},
@@ -17,9 +20,6 @@
 
     /* Private variables */
     const _dialog = ref<boolean>(false);
-    const _errorMsg = ref<string>('');
-    const _noteLimit = 100;
-    const _today = ref<Date>(new Date());
     const _patient = ref<Patient>({} as Patient);
 
     /* UI references */
@@ -28,13 +28,13 @@
 
     /**
      * Open the patient editor.
+     *
+     * @param {number} id The ID of the patient to be edited.
      */
-    async function open(): Promise<any> {
-        _patient.value = { ...patient.value };
+    async function open(id: number): Promise<boolean> {
+        await readPatientById(id);
 
-        _errorMsg.value = '';
-        _today.value = new Date();
-        
+        _patient.value = { ...patient.value };
         _dialog.value = true;
         
         return new Promise<any>((resolve, reject) => {
@@ -49,7 +49,7 @@
      function openDatePicker(): void {
         if (datePicker.value) {
             const dialog = <any>datePicker.value;
-            dialog.open(_today.value)
+            dialog.open(_patient.value.birthdate)
                 .then(async (confirm: boolean) => {
                 if (confirm) {
                     _patient.value.birthdate = dialog.date.value;
@@ -62,7 +62,6 @@
      * Save the changes made to the request.
      */
     async function save(): Promise<void> {
-        _errorMsg.value = '';
         if (!form.value) return;
 
         const { valid } = await form.value.validate();
@@ -70,7 +69,7 @@
 
         let success: boolean = false;
 
-        if (_patient.value.id === undefined) {
+        if (_patient.value.id <= 0) {
             success = await createPatient(_patient.value)
         }
         else {
@@ -102,13 +101,13 @@
     <v-dialog
         v-model="_dialog"
         class="w-sm-100 w-md-66 w-lg-50"
-        :scrollable="isMobile"
+        persistent
         @keydown.esc="close">
         <template v-slot:default="{ isActive }">
             <v-card :disabled="isPending" v-bind="isActive">
                 <v-toolbar>
                     <v-icon 
-                        icon="mdi-email-outline"
+                        :icon="_patient.id <= 0 ? 'mdi-account-plus' : 'mdi-account-edit'"
                         class="mx-3" />
                         {{ _patient.id <= 0 ? txt.headings.newPatient : txt.headings.editPatient }}
                 </v-toolbar>
@@ -122,14 +121,38 @@
                                 <v-text-field
                                     :label="txt.fields.firstName"
                                     v-model="_patient.firstName"
-                                    hide-details
+                                    :rules="[required]"
                                     @keydown.enter.exact.prevent="save" />
                             </v-col>
                             <v-col>
                                 <v-text-field
                                     :label="txt.fields.lastName"
                                     v-model="_patient.lastName"
-                                    hide-details
+                                    :rules="[required]"
+                                    @keydown.enter.exact.prevent="save" />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters
+                            class="ga-6">
+                            <v-col>
+                                <v-text-field
+                                    :label="txt.fields.birthdate"
+                                    persistent-placeholder
+                                    readonly
+                                    @click.stop="() => openDatePicker()"
+                                    @keydown.enter.exact.prevent="() => openDatePicker()">
+                                    <span class="d-flex justify-space-between ga-3">
+                                        <span>{{ new Date(_patient.birthdate).toLocaleDateString(userLang) }}</span>
+                                        <span class="color-secondary">({{ getAge(_patient.birthdate) }}&nbsp;{{ txt.units.years }})</span>
+                                    </span>
+                                </v-text-field>
+                            </v-col>
+                            <v-col>
+                                <v-select
+                                    :label="txt.fields.sex"
+                                    v-model="_patient.sex"
+                                    :items="sexes"
+                                    :rules="[required]"
                                     @keydown.enter.exact.prevent="save" />
                             </v-col>
                         </v-row>
@@ -141,6 +164,7 @@
                         color="primary"
                         :disabled="isPending"
                         :elevation="!isPending ? 4 : 0"
+                        variant="flat"
                         @click.stop="save">
                         {{ txt.buttons.ok }}
                     </v-btn>
@@ -154,4 +178,5 @@
             </v-card>
         </template>
     </v-dialog>
+    <DatePicker ref="datePicker" />
 </template>

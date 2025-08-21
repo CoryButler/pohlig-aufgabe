@@ -3,22 +3,47 @@
         "cancel": "Abbrechen",
         "close": "Schließen",
         "delete": "Löschen",
+        "details": "Details",
         "edit": "Bearbeiten",
+        "logOut": "Abmelden",
         "newPatient": "Neuer Patient",
         "ok": "OK"
     },
-    "headings": {
-        "editPatient": "Patient Bearbeiten",
-        "newPatient": "Neuer Patient"
+    "dataTable": {
+        "itemsPerPage": "Artikel pro Seite",
+        "pageText": "{0}-{1} von {2}"
     },
     "fields": {
+        "age": "Alter",
         "birthdate": "Geburtsdatum",
         "firstName": "Vorname",
         "lastName": "Nachname",
+        "patientId": "Patient ID",
         "sex": "Geschlecht"
+    },
+    "headings": {
+        "deletePatient": "Patient Löschen",
+        "editPatient": "Patient Bearbeiten",
+        "newPatient": "Neuer Patient",
+        "patientList": "Patientenliste"
+    },
+    "labels": {
+        "darkMode": "Dunkelmodus",
+        "language": "Sprache",
+        "patientServices": "Patientenservices"
     },
     "language": {
         "en": "English",
         "de": "Deutsch"
+    },
+    "sexes": {
+        "male": "Männlich",
+        "female": "Weiblich"
+    },
+    "units": {
+        "years": "J."
+    },
+    "messages": {
+        "deletePatient": "Sind Sie sicher, dass Sie diesen Patienten löschen möchten?"
     }
 }

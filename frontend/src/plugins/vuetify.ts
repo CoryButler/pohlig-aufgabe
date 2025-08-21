@@ -55,7 +55,7 @@ export default createVuetify({
             variant: 'underlined',
             validateOn: 'blur'
          },
-         VDataTableServer: {
+         VDataTable: {
             fixedHeader: true,
             noDataText: 'no data available'
          },
@@ -64,7 +64,7 @@ export default createVuetify({
          },
          VFooter: {
             elevation: 8,
-            style: 'border-top: 1px solid var(--v-theme-surfaceLight)'
+            style: 'border-top: 1px solid rgb(var(--v-theme-surfaceLight))'
          },
          VNavigationDrawer: {
             elevation: 4
@@ -110,7 +110,7 @@ export default createVuetify({
          }
       },
       display: {
-         mobileBreakpoint: 'md',
+         mobileBreakpoint: 'sm',
       },
       theme: {
          defaultTheme: 'system',

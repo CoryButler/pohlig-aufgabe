@@ -4,16 +4,15 @@ import en from '@/languages/en.json';
 import de from '@/languages/de.json';
 
 export const useAppStore = defineStore("appStore", () => {
+  /* Public variables */
+  const brandIcon = computed(() => { return 'mdi-circle-outline'; });
+  const isAdmin = ref<boolean>(false);
+  const isDark = ref<boolean>(false);
   const isMobile = ref<any>();
   const isMenu = ref<boolean>(!isMobile.value);
-
-  const brandIcon = computed(() => { return 'mdi-calendar-arrow-right'; });
   const siteName = computed(() => { return 'Patientenverwaltungssystem'; });
   const tagLine = computed(() => { return 'Pohlig Programmieraufgabe'; });
-
-  const _userLang: string = navigator.language.substring(0, 2);
-
-  const userLang = computed(() => _userLang);
+  const userLang = ref<string>(navigator.language.substring(0, 2));
 
   const txt = computed(() => { 
     const lang_id = userLang.value;
@@ -29,7 +28,7 @@ export const useAppStore = defineStore("appStore", () => {
   ]);
 
   return {
-    brandIcon, isMenu, isMobile, langs, siteName, tagLine, txt, userLang
+    brandIcon, isAdmin, isDark, isMenu, isMobile, langs, siteName, tagLine, txt, userLang
   };
 });
 

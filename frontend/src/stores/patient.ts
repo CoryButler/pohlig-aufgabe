@@ -1,8 +1,20 @@
 import { ref, computed } from "vue";
 import { acceptHMRUpdate, defineStore } from "pinia";
-import type { Patient } from './types';
+import { useAppStore } from "./app";
+
+export interface Patient {
+    id: number,
+    birthdate: Date,
+    firstName: string,
+    lastName: string,
+    sex: string | undefined
+}
 
 export const usePatientStore = defineStore("patientStore", () => {
+    /* Store variables */
+    const appStore = useAppStore();
+    const { txt } = storeToRefs(appStore);
+
     /* Private variables */
     const _isPending = ref<boolean>(false);
     const _patient = ref<Patient>({} as Patient);
@@ -12,14 +24,23 @@ export const usePatientStore = defineStore("patientStore", () => {
         birthdate: new Date(),
         firstName: '',
         lastName: '',
-        sex: ''
+        sex: undefined
     });
 
     /* Public variables */
     const isPending = computed<boolean>(() => _isPending.value);
     const patient = computed<Patient>(() => _patient.value);
     const patients = computed<Array<Patient>>(() => _patients.value);
-    const emptyPatient = computed<Patient>(() => { return { ..._emptyPatient.value }; });
+    const sexes = computed(() => {
+        return [
+            { title: txt.value.sexes.male, value: 'm' },
+            { title: txt.value.sexes.female, value: 'f' }
+        ];
+    });
+
+    function setEmptyPatient(): void {
+        _patient.value = { ..._emptyPatient.value };
+    }
 
     /** 
      * Read all patients via backend API
@@ -48,18 +69,24 @@ export const usePatientStore = defineStore("patientStore", () => {
      * @param {number} id The id of the patient to be read.
      */
     async function readPatientById(id: number): Promise<void> {
+        // If ID is not valid, set empty patient.
+        if (id <= 0) {
+            setEmptyPatient();
+            return;
+        }
+
         try {
             _isPending.value = true;
             const response = await fetch(`http://localhost:5000/patients/${id}`);
 
-            if (!response.ok) throw new Error('Failed to read patient');
+            if (!response.ok) throw new Error();
 
             const data = await response.json();
             _patient.value = { ...data };
         }
-        catch (error) {
-            console.error('Error fetching patient:', error);
-            _patient.value = { ...emptyPatient.value };
+        catch {
+            console.error('Error fetching patient with ID:', id);
+            setEmptyPatient();
         }
         finally {
             _isPending.value = false;
@@ -135,17 +162,16 @@ export const usePatientStore = defineStore("patientStore", () => {
             _isPending.value = true;
             const response = await fetch(`http://localhost:5000/patients/${_patient.value.id}`, {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(_patient.value)
+                headers: { 'Content-Type': 'application/json' }
             });
 
-            if (!response.ok) throw new Error('Failed to delete patient');
+            if (!response.ok) throw new Error();
 
             const data = await response.json();
             _patient.value = { ...data };
             success = true;
-        } catch (error) {
-            console.error('Error deleting patient:', error);
+        } catch {
+            console.error('Error deleting patient:', _patient.value);
         }
         finally {
             _isPending.value = false;
@@ -154,7 +180,7 @@ export const usePatientStore = defineStore("patientStore", () => {
     }
 
     return {
-        emptyPatient, isPending, patient, patients,
+        isPending, patient, patients, sexes,
         createPatient, readPatients, readPatientById, updatePatient, deletePatient
     };
 });
