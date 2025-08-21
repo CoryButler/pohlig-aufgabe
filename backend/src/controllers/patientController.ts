@@ -110,7 +110,7 @@ export const createPatient = (req: Request, res: Response, next: NextFunction): 
 };
 
 // Read all patients
-export const getPatients = (req: Request, res: Response, next: NextFunction): void => {
+export const readPatients = (req: Request, res: Response, next: NextFunction): void => {
   try {
     // Respond with all patients
     res.status(stati.OK).json(patients);
@@ -121,7 +121,7 @@ export const getPatients = (req: Request, res: Response, next: NextFunction): vo
 };
 
 // Read single patient
-export const getPatientById = (req: Request, res: Response, next: NextFunction): void => {
+export const readPatientById = (req: Request, res: Response, next: NextFunction): void => {
   try {
     // Check for missing params
     if (!validParams(req, res)) return;

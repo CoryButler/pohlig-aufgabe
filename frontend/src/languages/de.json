@@ -1,4 +1,22 @@
 {
+    "buttons": {
+        "cancel": "Abbrechen",
+        "close": "Schließen",
+        "delete": "Löschen",
+        "edit": "Bearbeiten",
+        "newPatient": "Neuer Patient",
+        "ok": "OK"
+    },
+    "headings": {
+        "editPatient": "Patient Bearbeiten",
+        "newPatient": "Neuer Patient"
+    },
+    "fields": {
+        "birthdate": "Geburtsdatum",
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "sex": "Geschlecht"
+    },
     "language": {
         "en": "English",
         "de": "Deutsch"

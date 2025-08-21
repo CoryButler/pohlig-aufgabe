@@ -1,19 +1,19 @@
 import { Router } from 'express';
 import {
   createPatient,
-  getPatients,
-  getPatientById,
+  readPatients,
+  readPatientById,
   updatePatient,
   deletePatient,
 } from '../controllers/patientController';
 
 const router = Router();
 
-router.route('/').get(getPatients)
+router.route('/').get(readPatients)
     .post(createPatient);
 
 router.route('/:id')
-    .get(getPatientById)
+    .get(readPatientById)
     .put(updatePatient)
     .delete(deletePatient);
 

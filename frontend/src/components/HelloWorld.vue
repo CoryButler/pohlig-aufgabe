@@ -1,90 +1,137 @@
+<script setup lang="ts">
+  import { useAppStore } from '@/stores/app';
+  import { usePatientStore } from '@/stores/patient';
+  import PatientEditor from '@/components/Patient/Editor.vue';
+  import PatientRemove from '@/components/Patient/Remove.vue';
+
+  /* Store variables */
+  const appStore = useAppStore();
+  const { siteName, tagLine, txt, userLang } = storeToRefs(appStore);
+  const patientStore = usePatientStore();
+  const { isPending, patient, patients } = storeToRefs(patientStore);
+  const { readPatients, readPatientById } = patientStore;
+  
+  /* UI references */
+  const editDialog = ref<HTMLElement>();
+  const removeDialog = ref<HTMLElement>();
+
+  /* Table headers */
+  type Header = {
+    title: string;
+    key: string;
+    align?: string;
+    sortable?: boolean;
+  };
+  const headers = computed<Array<Header>>(() => [
+    { title: txt.value.fields.firstName, key: 'firstName' },
+    { title: txt.value.fields.lastName, key: 'lastName' },
+    { title: txt.value.fields.birthdate, key: 'birthdate' },
+    { title: txt.value.fields.sex, key: 'sex' },
+    { title: '', key: 'action', align: 'end', sortable: false }
+  ]);
+
+  /**
+   * Open the edit patient dialog.
+   * 
+   * @param {number} id The id of the patient to be modified. If null, a new patient is created.
+   */
+  async function openEditDialog(id: number): Promise<void> {
+    if (editDialog.value) {
+      await readPatientById(id);
+      const dialog = <any>editDialog.value;
+      dialog.open().then(async (confirm: boolean) => {
+          if (confirm) {
+              refreshTable();
+          }
+      });
+    }
+  }
+
+  /**
+   * Open the remove patient dialog.
+   * 
+   * @param {number} id The id of the patient to be removed.
+   */
+  async function openRemoveDialog(id: number): Promise<void> {
+    if (removeDialog.value) {
+      await readPatientById(id);
+      const dialog = <any>removeDialog.value;
+      dialog.open().then(async (confirm: boolean) => {
+          if (confirm) {
+              refreshTable();
+          }
+      });
+    }
+  }
+
+  /**
+   * Refresh the patients table in the UI
+   */
+  function refreshTable(): void {
+    readPatients();
+  }
+
+  refreshTable();
+</script>
+
 <template>
   <v-container class="fill-height" max-width="900">
     <div>
       <v-img
         class="mb-4"
         height="150"
-        src="@/assets/logo.png"
-      />
+        src="@/assets/logo.png" />
 
       <div class="mb-8 text-center">
-        <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
-        <h1 class="text-h2 font-weight-bold">Vuetify</h1>
+        <p class="font-weight-light">{{ tagLine }}</p>
+        <h1>{{ siteName }}</h1>
       </div>
 
-      <v-row>
-        <v-col cols="12">
-          <v-card
-            class="py-4"
-            color="surface-variant"
-            image="https://cdn.vuetifyjs.com/docs/images/one/create/feature.png"
-            prepend-icon="mdi-rocket-launch-outline"
-            rounded="lg"
-            variant="tonal"
-          >
-            <template #image>
-              <v-img position="top right" />
+      {{ patient }}
+      <v-data-table
+        :loading="isPending"
+        :headers="headers"
+        :items="patients">
+        <template v-slot:item.birthdate="{ item }">
+          {{ new Date(item.birthdate).toLocaleDateString(userLang) }}
+        </template>
+            <template v-slot:item.action="{ item }">
+                <v-row
+                    class="ga-1 justify-end"
+                    no-gutters>
+                    <v-tooltip
+                        :text="txt.buttons.edit">
+                        <template v-slot:activator="{ props }">
+                            <v-btn icon
+                                class="emboss"
+                                size="x-small"
+                                v-bind="props"
+                                @click.stop="openEditDialog(item.id)">
+                                <v-icon
+                                    icon="mdi-pencil"
+                                    size="x-small" />
+                            </v-btn>
+                        </template>
+                    </v-tooltip>
+                    <v-tooltip
+                        :text="txt.buttons.delete">
+                        <template v-slot:activator="{ props }">
+                            <v-btn icon
+                                class="emboss"
+                                size="x-small"
+                                v-bind="props"
+                                @click.stop="openRemoveDialog(item.id)">
+                                <v-icon
+                                    icon="mdi-trash-can"
+                                    size="x-small" />
+                            </v-btn>
+                        </template>
+                    </v-tooltip>
+                </v-row>
             </template>
-
-            <template #title>
-              <h2 class="text-h5 font-weight-bold">
-                Get started
-              </h2>
-            </template>
-
-            <template #subtitle>
-              <div class="text-subtitle-1">
-                Change this page by updating <v-kbd>{{ `<HelloWorld />` }}</v-kbd> in <v-kbd>components/HelloWorld.vue</v-kbd>.
-              </div>
-            </template>
-          </v-card>
-        </v-col>
-
-        <v-col v-for="link in links" :key="link.href" cols="6">
-          <v-card
-            append-icon="mdi-open-in-new"
-            class="py-4"
-            color="surface-variant"
-            :href="link.href"
-            :prepend-icon="link.icon"
-            rel="noopener noreferrer"
-            rounded="lg"
-            :subtitle="link.subtitle"
-            target="_blank"
-            :title="link.title"
-            variant="tonal"
-          />
-        </v-col>
-      </v-row>
+      </v-data-table>
     </div>
+    <PatientEditor ref="editDialog" />
+    <PatientRemove ref="removeDialog" />
   </v-container>
 </template>
-
-<script setup lang="ts">
-  const links = [
-    {
-      href: 'https://vuetifyjs.com/',
-      icon: 'mdi-text-box-outline',
-      subtitle: 'Learn about all things Vuetify in our documentation.',
-      title: 'Documentation',
-    },
-    {
-      href: 'https://vuetifyjs.com/introduction/why-vuetify/#feature-guides',
-      icon: 'mdi-star-circle-outline',
-      subtitle: 'Explore available framework Features.',
-      title: 'Features',
-    },
-    {
-      href: 'https://vuetifyjs.com/components/all',
-      icon: 'mdi-widgets-outline',
-      subtitle: 'Discover components in the API Explorer.',
-      title: 'Components',
-    },
-    {
-      href: 'https://discord.vuetifyjs.com',
-      icon: 'mdi-account-group-outline',
-      subtitle: 'Connect with Vuetify developers.',
-      title: 'Community',
-    },
-  ]
-</script>

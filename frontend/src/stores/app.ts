@@ -11,10 +11,12 @@ export const useAppStore = defineStore("appStore", () => {
   const siteName = computed(() => { return 'Patientenverwaltungssystem'; });
   const tagLine = computed(() => { return 'Pohlig Programmieraufgabe'; });
 
-  const userLang: string = navigator.language.substring(0, 2);
+  const _userLang: string = navigator.language.substring(0, 2);
+
+  const userLang = computed(() => _userLang);
 
   const txt = computed(() => { 
-    const lang_id = userLang;
+    const lang_id = userLang.value;
     switch (lang_id) {
       case 'de': return { ...de };
       default: return { ...en };
@@ -27,7 +29,7 @@ export const useAppStore = defineStore("appStore", () => {
   ]);
 
   return {
-    brandIcon, isMenu, isMobile, langs, siteName, tagLine, txt
+    brandIcon, isMenu, isMobile, langs, siteName, tagLine, txt, userLang
   };
 });
 

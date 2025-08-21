@@ -1,9 +1,9 @@
 export interface Patient {
-  id: number,
-  firstName: string,
-  lastName: string,
-  birthdate: Date,
-  sex: string
+    id: number,
+    firstName: string,
+    lastName: string,
+    birthdate: Date,
+    sex: string
 }
 
 export let patients: Array<Patient> = [
