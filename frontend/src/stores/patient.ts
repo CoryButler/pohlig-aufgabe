@@ -1,5 +1,6 @@
 import { ref, computed } from "vue";
 import { acceptHMRUpdate, defineStore } from "pinia";
+import { baseUrl } from "@/constants/app";
 import { useAppStore } from "./app";
 
 export interface Patient {
@@ -56,7 +57,7 @@ export const usePatientStore = defineStore("patientStore", () => {
     async function readPatients(): Promise<void> {
         try {
             _isPending.value = true;
-            const response = await fetch(`http://localhost:5000/patients`);
+            const response = await fetch(`${baseUrl}/patients`);
 
             if (!response.ok) throw new Error('Failed to read patients');
 
@@ -85,7 +86,7 @@ export const usePatientStore = defineStore("patientStore", () => {
 
         try {
             _isPending.value = true;
-            const response = await fetch(`http://localhost:5000/patients/${id}`);
+            const response = await fetch(`${baseUrl}/patients/${id}`);
 
             if (!response.ok) throw new Error();
 
@@ -111,7 +112,7 @@ export const usePatientStore = defineStore("patientStore", () => {
         let success: boolean = false;
         try {
             _isPending.value = true;
-            const response = await fetch(`http://localhost:5000/patients`, {
+            const response = await fetch(`${baseUrl}/patients`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(tempPatient)
@@ -142,7 +143,7 @@ export const usePatientStore = defineStore("patientStore", () => {
         let success: boolean = false;
         try {
             _isPending.value = true;
-            const response = await fetch(`http://localhost:5000/patients/${tempPatient.id}`, {
+            const response = await fetch(`${baseUrl}/patients/${tempPatient.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(tempPatient)
@@ -168,7 +169,7 @@ export const usePatientStore = defineStore("patientStore", () => {
         let success: boolean = false;
         try {
             _isPending.value = true;
-            const response = await fetch(`http://localhost:5000/patients/${_patient.value.id}`, {
+            const response = await fetch(`${baseUrl}/patients/${_patient.value.id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             });

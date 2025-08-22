@@ -46,7 +46,7 @@
     /**
      * Open the date picker dialog.
      */
-     function openDatePicker(): void {
+    function openDatePicker(): void {
         if (datePicker.value) {
             const dialog = <any>datePicker.value;
             dialog.open(_patient.value.birthdate)

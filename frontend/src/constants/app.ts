@@ -6,3 +6,5 @@ export const perPageOptions = [
     { title: '100', value: 100 },
     { title: 'All', value: Number.MAX_SAFE_INTEGER }
 ];
+
+export const baseUrl = 'http://localhost:5000';

@@ -58,6 +58,10 @@
         "years": "yr."
     },
     "messages": {
-        "deletePatient": "Are you sure you want to delete this patient?"
+        "deletePatient": "Are you sure you want to delete this patient?",
+        "emailValid": "Must be a valid E-mail",
+        "positiveFloat": "Must be a positive number",
+        "positiveInt": "Must be a positive integer",
+        "required": "This field is required"
     }
 }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@400..700&family=Fjalla+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 
 
 html {
@@ -6,7 +6,7 @@ html {
 }
 
 body {
-    background: var(--v-theme-surfaceLight);
+    background: rgb(var(--v-theme-surfaceLight));
 }
 
 a {
@@ -14,28 +14,9 @@ a {
 }
 
 .brand-font {
-    font-family: "Alkatra", serif;
+    font-family: "Abel", serif;
     font-optical-sizing: auto;
     font-weight: 700;
-    font-style: normal;
-}
-
-.font-fjalla-one {
-    font-family: "Fjalla One", serif;
-    font-optical-sizing: auto;
-    font-weight: 700;
-    font-style: normal;
-}
-
-.mea-culpa-regular {
-    font-family: "Mea Culpa", serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.meow-script-regular {
-    font-family: "Meow Script", serif;
-    font-weight: 400;
     font-style: normal;
 }
 
@@ -48,7 +29,7 @@ a {
 }
 
 .color-surfaceDark {
-    color: var(--v-theme-surfaceDark);
+    color: rgb(var(--v-theme-surfaceDark));
 }
 
 .color-tertiary {
@@ -105,20 +86,20 @@ a {
     overflow: hidden;
 }
 
-  /************/
- /* VTabItem */
+/************/
+/* VTabItem */
 /************/
 
 .v-tab {
-    color: var(--v-theme-tertiary) !important;
+    color: rgb(var(--v-theme-tertiary)) !important;
 }
 
 .v-tab-item--selected {
-    background: linear-gradient(90deg, var(--v-theme-surfaceDark), transparent 50%) !important;
+    background: linear-gradient(90deg, rgb(var(--v-theme-surfaceDark)), transparent 50%) !important;
 }
 
-  /********************/
- /* VDataTableServer */
+/********************/
+/* VDataTableServer */
 /********************/
 
 .v-data-table {
@@ -138,21 +119,21 @@ a {
     height: 32px !important;
 }
 
-  /***************/
- /* Transitions */
+/***************/
+/* Transitions */
 /***************/
 
 .page-leave-active,
 .page-enter-active {
-   transition: 100ms all ease;
+    transition: 100ms all ease;
 }
 
 .page-enter-from {
     transform: scale(1.1);
     opacity: 0;
- }
+}
 
 .page-leave-to {
-   transform: scale(0.9);
-   opacity: 0;
+transform: scale(0.9);
+opacity: 0;
 }

@@ -1,9 +1,9 @@
 <script setup lang="ts">
     import { useTheme } from 'vuetify';
     import { useAppStore } from '@/stores/app';
-  import { useLocale } from 'vuetify'
+    import { useLocale } from 'vuetify';
 
-  const { current } = useLocale()
+    const { current } = useLocale()
 
     /* Store variables */
     const { isAdmin, isDark, langs, txt, userLang } = storeToRefs(useAppStore());
@@ -31,6 +31,7 @@
         v-model="_menu"
         :close-on-content-click="false"
         location="bottom">
+
         <template v-slot:activator="{ props }">
             <div v-bind="props"
                 class="cursor-pointer pl-3">
@@ -61,8 +62,7 @@
                     item-value="id"
                     color="primary"
                     hide-details />
-            </v-card-text>
-            
+            </v-card-text>            
             <v-card-actions>
                 <v-spacer />
                 <v-btn

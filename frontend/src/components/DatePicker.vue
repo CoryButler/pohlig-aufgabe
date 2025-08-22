@@ -7,7 +7,7 @@
     });
 
     /* Store variables */
-    const { isMobile, txt, userLang } = storeToRefs(useAppStore());
+    const { isMobile, txt } = storeToRefs(useAppStore());
     
     /* Private variables */
     const _date = ref<Date>(new Date());

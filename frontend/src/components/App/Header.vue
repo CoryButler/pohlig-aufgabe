@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { useDisplay } from 'vuetify';
     import { useAppStore } from '@/stores/app';
+    import AppSettings from '@/components/App/Settings.vue';
 
     /* Store variables */
     const { brandIcon, isMobile, txt } = storeToRefs(useAppStore());
@@ -34,13 +35,15 @@
             </div>
         </v-app-bar-title>
         <div class="d-flex align-center">
-            <v-icon
-                icon="mdi-account-circle-outline"
-                class="pr-3 mb-auto"
-                color="secondary"
-                style="background: transparent" />
             <div class="text-end">
-                <p class="text-body-2">Klaudia Müller</p>
+                <p class="text-body-2">
+                    <v-icon
+                        icon="mdi-account-circle-outline"
+                        class="pr-3 mb-auto"
+                        color="secondary"
+                        style="background: transparent" />
+                    Klaudia Müller
+                </p>
                 <p class="text-caption">
                     <span class="color-primary">
                         {{ txt.labels.patientServices }}

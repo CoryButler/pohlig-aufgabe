@@ -15,7 +15,7 @@ export interface Patient {
     pharmacy?: string
 }
 
-export const initPrimaryKey: number = 7810;
+export const initPrimaryKey: number = 7819;
 
 export let patients: Array<Patient> = [
     {

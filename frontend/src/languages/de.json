@@ -58,6 +58,10 @@
         "years": "J."
     },
     "messages": {
-        "deletePatient": "Sind Sie sicher, dass Sie diesen Patienten löschen möchten?"
+        "deletePatient": "Sind Sie sicher, dass Sie diesen Patienten löschen möchten?",
+        "emailValid": "Muss eine gültige Email-Adresse sein",
+        "positiveFloat": "Muss eine positive Zahl sein",
+        "positiveInt": "Muss eine positive ganze Zahl sein",
+        "required": "Dieses Feld ist erforderlich"
     }
 }

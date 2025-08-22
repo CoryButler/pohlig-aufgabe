@@ -8,16 +8,22 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    AppBar: typeof import('./components/AppHeader.vue')['default']
-    AppFooter: typeof import('./components/AppFooter.vue')['default']
-    AppHeader: typeof import('./components/AppHeader.vue')['default']
-    AppSettings: typeof import('./components/AppSettings.vue')['default']
+    AppFooter: typeof import('./components/App/Footer.vue')['default']
+    AppHeader: typeof import('./components/App/Header.vue')['default']
+    AppSettings: typeof import('./components/App/Settings.vue')['default']
     DatePicker: typeof import('./components/DatePicker.vue')['default']
     Details: typeof import('./components/Patient/Details.vue')['default']
     Editor: typeof import('./components/Patient/Editor.vue')['default']
-    HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    Footer: typeof import('./components/App/Footer.vue')['default']
+    Header: typeof import('./components/App/Header.vue')['default']
+    List: typeof import('./components/Patient/List.vue')['default']
+    PatientDetails: typeof import('./components/Patient/Details.vue')['default']
+    PatientEditor: typeof import('./components/Patient/Editor.vue')['default']
+    PatientList: typeof import('./components/Patient/List.vue')['default']
+    PatientRemove: typeof import('./components/Patient/Remove.vue')['default']
     Remove: typeof import('./components/Patient/Remove.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Settings: typeof import('./components/App/Settings.vue')['default']
   }
 }

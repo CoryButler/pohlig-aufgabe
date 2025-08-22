@@ -49,6 +49,7 @@ pohlig-aufgabe/
 │   └── ...
 │
 ├── frontend/ # Frontend framework
+│   ├── public/             # URI-accessable resources (favicon.ico)
 │   ├── src/
 │   │   ├── assets/         # Preloaded image storage
 │   │   ├── components/     # Vue template files
