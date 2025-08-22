@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import authRoutes from './routes/authRoutes';
 import patientRoutes from './routes/patientRoutes';
+import { authenticateToken } from './middleware/authentication';
 import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
@@ -9,7 +11,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// Public Routes
+app.use('/', authRoutes);
+
+// Protected Routes
+app.use(authenticateToken);
 app.use('/patients', patientRoutes);
 
 // Error handler

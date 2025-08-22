@@ -1,0 +1,29 @@
+GET http://localhost:5000/patients 
+Authorization: Bearer accessToken
+
+###
+
+DELETE http://localhost:5000/logout
+Content-Type: application/json
+
+{
+    "token": "accessToken"
+}
+
+###
+
+POST http://localhost:5000/token
+Content-Type: application/json
+
+{
+    "token": "accessToken"
+}
+
+###
+
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "username": "Cory"
+}

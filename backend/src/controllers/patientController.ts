@@ -1,21 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import { initPrimaryKey, patients, type Patient } from '../models/patient';
+import { stati } from '../config/config';
 
 /*********************/
 /* Private variables */
 /*********************/
 
 let _primaryKey: number = initPrimaryKey;
-const msg_id_required: string = 'Patient ID is required';
-const msg_missing_field: string = 'Missing required field(s): ';
-const msg_not_found: string = 'Patient not found';
-const stati: { [key: string]: number } = Object.freeze({
-  OK: 200,
-  CREATED: 201,
-  BAD_REQUEST: 400,
-  NOT_FOUND: 404,
-  UNPROCESSABLE_ENTITY: 422
-});
+const _msg_id_required: string = 'Patient ID is required';
+const _msg_missing_field: string = 'Missing required field(s): ';
+const _msg_not_found: string = 'Patient not found';
 
 /*********************/
 /* Private functions */
@@ -52,7 +46,7 @@ function validFields(req: Request, res: Response): boolean {
 
     if (isInvalidFields) {
         res.status(stati.UNPROCESSABLE_ENTITY).json({
-            message: `${msg_missing_field}${missingFields.join(', ')}`
+            message: `${_msg_missing_field}${missingFields.join(', ')}`
         });
     }
 
@@ -70,7 +64,7 @@ function validParams(req: Request, res: Response): boolean {
   const isInvalidParams: boolean = !req.params || !req.params.id;
 
   if (isInvalidParams) {
-    res.status(stati.BAD_REQUEST).json({ message: msg_id_required });
+    res.status(stati.BAD_REQUEST).json({ message: _msg_id_required });
   }
 
   return !isInvalidParams;
@@ -87,7 +81,7 @@ function validId(id: number, res: Response): boolean {
   const isValidId = patients.some(p => p.id === id);
   
   if (!isValidId) {
-    res.status(stati.NOT_FOUND).json({ message: msg_not_found });
+    res.status(stati.NOT_FOUND).json({ message: _msg_not_found });
   }
 
   return isValidId;
@@ -111,8 +105,9 @@ export const createPatient = (req: Request, res: Response, next: NextFunction): 
     // Respond with the created patient
     res.status(stati.CREATED).json(patient);
   }
-  catch (error) {
-    next(error);
+  catch (e) {
+    console.error(e);
+    next(e);
   }
 };
 
@@ -122,8 +117,9 @@ export const readPatients = (req: Request, res: Response, next: NextFunction): v
     // Respond with all patients
     res.status(stati.OK).json(patients);
   }
-  catch (error) {
-    next(error);
+  catch (e) {
+    console.error(e);
+    next(e);
   }
 };
 
@@ -141,8 +137,9 @@ export const readPatientById = (req: Request, res: Response, next: NextFunction)
     // Respond with the requested patient
     res.status(stati.OK).json(patients.find(p => p.id === id));
   }
-  catch (error) {
-    next(error);
+  catch (e) {
+    console.error(e);
+    next(e);
   }
 };
 
@@ -168,8 +165,9 @@ export const updatePatient = (req: Request, res: Response, next: NextFunction): 
     // Respond with the updated patient
     res.status(stati.OK).json(patient);
   }
-  catch (error) {
-    next(error);
+  catch (e) {
+    console.error(e);
+    next(e);
   }
 };
 
@@ -190,7 +188,8 @@ export const deletePatient = (req: Request, res: Response, next: NextFunction): 
     // Respond with the deleted patient
     res.status(stati.OK).json(patient);
   }
-  catch (error) {
-    next(error);
+  catch (e) {
+    console.error(e);
+    next(e);
   }
 };
