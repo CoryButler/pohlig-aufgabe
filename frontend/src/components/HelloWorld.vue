@@ -3,6 +3,7 @@
   import { usePatientStore } from '@/stores/patient';
   import { perPageOptions } from '@/constants/app';
   import { getAge } from '@/utils/helper';
+  import PatientDetails from '@/components/Patient/Details.vue';
   import PatientEditor from '@/components/Patient/Editor.vue';
   import PatientRemove from '@/components/Patient/Remove.vue';
 
@@ -12,8 +13,13 @@
   const patientStore = usePatientStore();
   const { isPending, patients, sexes } = storeToRefs(patientStore);
   const { readPatients } = patientStore;
+
+  /* Private variables */
+  const _searchTerm = ref<string>('');
+  const _tempSearchTerm = ref<string>('');
   
   /* UI references */
+  const detailsDialog = ref<HTMLElement>();
   const editDialog = ref<HTMLElement>();
   const removeDialog = ref<HTMLElement>();
 
@@ -33,12 +39,28 @@
     { title: '', key: 'action', align: 'end', sortable: false }
   ]);
 
+  function setSearchTerm(): void {
+    _searchTerm.value = _tempSearchTerm.value;
+  }
+
+  /**
+   * Open the patient details dialog.
+   * 
+   * @param {number} id The ID of the patient to be reviewed in detail.
+   */
+  function openDetailsDialog(id: number): void {
+    if (detailsDialog.value && id > 0) {
+      const dialog = <any>detailsDialog.value;
+      dialog.open(id);
+    }
+  }
+
   /**
    * Open the edit patient dialog.
    * 
    * @param {number} id The ID of the patient to be modified. If the ID is invalid, a new patient is created.
    */
-  async function openEditDialog(id: number = 0): Promise<void> {
+  function openEditDialog(id: number = 0): void {
     if (editDialog.value) {
       const dialog = <any>editDialog.value;
       dialog.open(id).then((confirm: boolean) => {
@@ -54,7 +76,7 @@
    * 
    * @param {number} id The ID of the patient to be removed.
    */
-  async function openRemoveDialog(id: number): Promise<void> {
+  function openRemoveDialog(id: number): void {
     if (removeDialog.value) {
       const dialog = <any>removeDialog.value;
       dialog.open(id).then((confirm: boolean) => {
@@ -77,30 +99,47 @@
 
 <template>
   <v-container fluid class="fill-height justify-center pa-0 pb-16">
-      <v-card 
-        :class="isMobile ? 'mx-0' : 'mx-3'"
-        :rounded="isMobile ? '0' : 'lg'">
-        <v-toolbar>
-            <v-icon 
-                icon="mdi-account-multiple-outline"
-                class="mx-3"
-                color="primary"
-                style="transform: scaleX(-1);" />
-            <v-toolbar-title class="color-primary">
-                {{ txt.headings.patientList }}
-            </v-toolbar-title>
-            <v-btn
-                class="rounded-pill emboss"
-                color="primary"
-                elevation="4"
-                prepend-icon="mdi-plus"
-                @click.stop="openEditDialog()">
-                {{ txt.buttons.newPatient }}
-            </v-btn>
-        </v-toolbar>
+    <v-card 
+      class="my-6"
+      :class="isMobile ? 'mx-0' : 'mx-3'"
+      :rounded="isMobile ? '0' : 'lg'">
+      <v-toolbar>
+          <v-icon 
+              icon="mdi-account-multiple-outline"
+              class="mx-3"
+              color="primary"
+              style="transform: scaleX(-1);" />
+          <v-toolbar-title class="color-primary">
+              {{ txt.headings.patientList }}
+          </v-toolbar-title>
+          <v-btn v-if="isAdmin"
+              class="rounded-pill emboss"
+              color="primary"
+              elevation="4"
+              prepend-icon="mdi-plus"
+              variant="flat"
+              @click.stop="openEditDialog()">
+              {{ txt.buttons.newPatient }}
+          </v-btn>
+      </v-toolbar>
+      <v-card-text
+        class="d-flex pa-1 pb-0 ga-4"
+        no-gutters
+        style="background: rgb(var(--v-theme-surfaceLight));">
+        <v-text-field
+          :label="txt.fields.searchTerm"
+          v-model="_tempSearchTerm"
+          @keydown.enter.exact.prevent="setSearchTerm" />
+        <v-btn
+          class="color-primary emboss"
+          prepend-icon="mdi-magnify"
+          @click="setSearchTerm">
+          {{ txt.buttons.search }}
+        </v-btn>
+      </v-card-text>
       <v-data-table
         :headers="headers"
-        :items="patients"
+        :items="patients.filter(p => _searchTerm === '' || p.firstName.toLowerCase().includes(_searchTerm.toLowerCase()) || p.lastName.toLowerCase().includes(_searchTerm.toLowerCase()))"
         :items-per-page-options="perPageOptions"
         :items-per-page-text="txt.dataTable.itemsPerPage"
         :loading="isPending"
@@ -125,7 +164,7 @@
                             class="emboss color-primary"
                             size="x-small"
                             v-bind="props"
-                            @click.stop="openEditDialog(item.id)">
+                            @click.stop="openDetailsDialog(item.id)">
                             <v-icon
                                 icon="mdi-account-details"
                                 size="x-small" />
@@ -164,6 +203,7 @@
         </template>
       </v-data-table>
     </v-card>
+    <PatientDetails ref="detailsDialog" />
     <PatientEditor ref="editDialog" />
     <PatientRemove ref="removeDialog" />
   </v-container>

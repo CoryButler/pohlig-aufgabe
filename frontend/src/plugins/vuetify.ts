@@ -57,7 +57,10 @@ export default createVuetify({
          },
          VDataTable: {
             fixedHeader: true,
-            noDataText: 'no data available'
+            noDataText: 'no data available',
+            VBtn: {
+               style: 'background: rgb(var(--v-theme-surfaceEdgeLeft))'
+            }
          },
          VDivider: {
             class: 'border-opacity-25'

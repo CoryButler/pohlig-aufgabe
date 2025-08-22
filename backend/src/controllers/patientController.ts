@@ -22,6 +22,17 @@ const stati: { [key: string]: number } = Object.freeze({
 /*********************/
 
 /**
+ * Build a Patient object from request body
+ * 
+ * @param {Request} req The request object
+ * @returns {Patient} Patient object populated from req.body
+ */
+function buildPatientFromRequest(req: Request): Patient {
+  const { id, birthdate, firstName, lastName, sex, phone, email, address, city, state, zip, country, insurance, pharmacy } = req.body;
+  return { id, birthdate, firstName, lastName, sex, phone, email, address, city, state, zip, country, insurance, pharmacy } as Patient;
+}
+
+/**
  * Validate the required fields in the request body.
  * 
  * @param req The request object.
@@ -92,16 +103,8 @@ export const createPatient = (req: Request, res: Response, next: NextFunction): 
     // Check for missing fields
     if (!validFields(req, res)) return;
 
-    const { birthdate, firstName, lastName, sex } = req.body;
-
     // Build patient object with next available id
-    const patient: Patient = {
-      id: _primaryKey++,
-      birthdate: birthdate,
-      firstName: firstName,
-      lastName: lastName,
-      sex: sex
-    };
+    const patient: Patient = { ...buildPatientFromRequest(req), id: _primaryKey++ };
 
     patients.push(patient);
 
@@ -157,14 +160,10 @@ export const updatePatient = (req: Request, res: Response, next: NextFunction): 
     // Check if patient exists
     if (!validId(id, res)) return;
 
-    const patient: Patient = patients.find(p => p.id === id);
+    let patient: Patient = patients.find(p => p.id === id);
 
-    const { birthdate, firstName, lastName, sex } = req.body;
-
-    patient.birthdate = birthdate;
-    patient.firstName = firstName;
-    patient.lastName = lastName;
-    patient.sex = sex;
+    // Build patient object with next available id
+    patient = { ...buildPatientFromRequest(req), id: _primaryKey++ };
 
     // Respond with the updated patient
     res.status(stati.OK).json(patient);

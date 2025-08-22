@@ -13,6 +13,7 @@ declare module 'vue' {
     AppHeader: typeof import('./components/AppHeader.vue')['default']
     AppSettings: typeof import('./components/AppSettings.vue')['default']
     DatePicker: typeof import('./components/DatePicker.vue')['default']
+    Details: typeof import('./components/Patient/Details.vue')['default']
     Editor: typeof import('./components/Patient/Editor.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     Remove: typeof import('./components/Patient/Remove.vue')['default']

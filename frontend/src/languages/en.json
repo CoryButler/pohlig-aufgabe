@@ -7,30 +7,44 @@
         "edit": "Edit",
         "logOut": "Log Out",
         "newPatient": "New Patient",
-        "ok": "OK"
+        "ok": "OK",
+        "search": "Search"
     },
     "dataTable": {
         "itemsPerPage": "Items per page",
         "pageText": "{0}-{1} of {2}"
     },
     "fields": {
+        "address": "Address",
         "age": "Age",
         "birthdate": "Birthdate",
+        "country": "Country",
+        "email": "E-mail",
         "firstName": "First Name",
+        "insurance": "Insurance",
         "lastName": "Last Name",
         "patientId": "Patient ID",
-        "sex": "Sex"
+        "pharmacy": "Pharmacy",
+        "phone": "Phone",
+        "searchTerm": "Search by name",
+        "sex": "Sex",
+        "state": "State",
+        "zip": "ZIP Code"
     },
     "headings": {
         "deletePatient": "Delete Patient",
         "editPatient": "Edit Patient",
         "newPatient": "New Patient",
+        "patientDetails": "Patient Details",
         "patientList": "Patient List"
     },
     "labels": {
         "darkMode": "Dark Mode",
         "language": "Language",
-        "patientServices": "Patient Services"
+        "optional": "optional",
+        "patientServices": "Patient Services",
+        "siteName": "Patient Management",
+        "tagLine": "Pohlig Programming Task"
     },
     "language": {
         "en": "English",

@@ -16,7 +16,7 @@
     watch(userLang, () => { current.value = userLang.value; });
 
     function setTheme(): void {
-        _theme.global.name.value = isDark.value ? 'theme_dark' : 'theme_light';
+        _theme.change(isDark.value ? 'theme_dark' : 'theme_light');
     }
 
     function init(): void {
@@ -33,7 +33,7 @@
         location="bottom">
         <template v-slot:activator="{ props }">
             <div v-bind="props"
-                class="cursor-pointer px-3">
+                class="cursor-pointer pl-3">
                 <v-icon
                     icon="mdi-cog"
                     color="secondary"

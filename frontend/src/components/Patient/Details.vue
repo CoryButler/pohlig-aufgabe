@@ -2,7 +2,6 @@
     import { useAppStore } from '@/stores/app';
     import { usePatientStore, type Patient } from '@/stores/patient';
     import DatePicker from '@/components/DatePicker.vue';
-    import { useFormRules } from '@/composables/useFormRules';
     import { getAge } from '@/utils/helper';
 
     /* Store variables */
@@ -10,8 +9,7 @@
     const { isMobile, txt, userLang } = storeToRefs(appStore);
     const patientStore = usePatientStore();
     const { isPending, patient, sexes } = storeToRefs(patientStore);
-    const { createPatient, readPatientById, updatePatient } = patientStore;
-    const { positiveInt, positiveFloat, required } = useFormRules();
+    const { readPatientById } = patientStore;
 
     const state = reactive({
         resolve: (val: boolean) => {},
@@ -44,44 +42,6 @@
     }
 
     /**
-     * Open the date picker dialog.
-     */
-     function openDatePicker(): void {
-        if (datePicker.value) {
-            const dialog = <any>datePicker.value;
-            dialog.open(_patient.value.birthdate)
-                .then(async (confirm: boolean) => {
-                if (confirm) {
-                    _patient.value.birthdate = dialog.date.value;
-                }
-            })
-        }
-    }
-
-    /**
-     * Save the changes made to the request.
-     */
-    async function save(): Promise<void> {
-        if (!form.value) return;
-
-        const { valid } = await form.value.validate();
-        if (!valid) return;
-
-        let success: boolean = false;
-
-        if (_patient.value.id <= 0) {
-            success = await createPatient(_patient.value)
-        }
-        else {
-            success = await updatePatient(_patient.value)
-        }
-        
-        if (!success) return;
-
-        close(true);
-    }
-
-    /**
      * Close the dialog and return the confirmation status.
      * 
      * @param {boolean} confirm The dialog's confirmation status.
@@ -110,15 +70,14 @@
                 :disabled="isPending">
                 <v-toolbar>
                     <v-icon 
-                        :icon="_patient.id <= 0 ? 'mdi-account-plus' : 'mdi-account-edit'"
+                        icon="mdi-account-details"
                         class="mx-3" />
-                        {{ _patient.id <= 0 ? txt.headings.newPatient : txt.headings.editPatient }}
+                        {{ txt.headings.patientDetails }}
                     <v-spacer />
                     <v-col cols="3" class="mt-2">
                         <v-text-field v-if="_patient.id > 0"
                             :label="txt.fields.patientId"
-                            v-model="_patient.id"
-                            readonly />
+                            v-model="_patient.id"/>
                     </v-col>
                     <v-btn 
                         icon="mdi-close"
@@ -135,16 +94,14 @@
                                 <v-text-field
                                     :label="txt.fields.firstName"
                                     v-model="_patient.firstName"
-                                    :rules="[required]"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly />
                             </v-col>
                             <v-col :cols="isMobile ? 12 : 6"
                                 class="px-2">
                                 <v-text-field
                                     :label="txt.fields.lastName"
                                     v-model="_patient.lastName"
-                                    :rules="[required]"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly />
                             </v-col>
                         </v-row>
                         <v-row no-gutters>
@@ -153,9 +110,7 @@
                                 <v-text-field
                                     :label="txt.fields.birthdate"
                                     persistent-placeholder
-                                    readonly
-                                    @click.stop="() => openDatePicker()"
-                                    @keydown.enter.exact.prevent="() => openDatePicker()">
+                                    readonly>
                                     <span class="d-flex justify-space-between ga-3">
                                         <span>{{ new Date(_patient.birthdate).toLocaleDateString(userLang) }}</span>
                                         <span class="color-secondary">({{ getAge(_patient.birthdate) }}&nbsp;{{ txt.units.years }})</span>
@@ -168,29 +123,23 @@
                                     :label="txt.fields.sex"
                                     v-model="_patient.sex"
                                     :items="sexes"
-                                    :rules="[required]"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly />
                             </v-col>
                         </v-row>
-                        <div class="d-flex align-center mb-4">
-                            <v-divider />
-                            <p class="mx-3 color-secondary">{{ txt.labels.optional }}</p>
-                            <v-divider />
-                        </div>
                         <v-row no-gutters>
                             <v-col :cols="isMobile ? 12 : 6"
                                 class="px-2">
                                 <v-text-field
                                     :label="txt.fields.phone"
                                     v-model="_patient.phone"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly />
                             </v-col>
                             <v-col :cols="isMobile ? 12 : 6"
                                 class="px-2">
                                 <v-text-field
                                     :label="txt.fields.email"
                                     v-model="_patient.email"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly />
                             </v-col>
                         </v-row>
                         <v-row no-gutters>
@@ -199,7 +148,7 @@
                                 <v-text-field
                                     :label="txt.fields.address"
                                     v-model="_patient.address"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly />
                             </v-col>
                         </v-row>
                         <v-row no-gutters>
@@ -208,21 +157,21 @@
                                 <v-text-field
                                     :label="txt.fields.state"
                                     v-model="_patient.state"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly />
                             </v-col>
                             <v-col cols="4"
                                 class="px-2">
                                 <v-text-field
                                     :label="txt.fields.zip"
                                     v-model="_patient.zip"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly />
                             </v-col>
                             <v-col cols="4"
                                 class="px-2">
                                 <v-text-field
                                     :label="txt.fields.country"
                                     v-model="_patient.country"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly />
                             </v-col>
                         </v-row>
                         <v-row no-gutters>
@@ -231,14 +180,14 @@
                                 <v-text-field
                                     :label="txt.fields.insurance"
                                     v-model="_patient.insurance"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly/>
                             </v-col>
                             <v-col cols="6"
                                 class="px-2">
                                 <v-text-field
                                     :label="txt.fields.pharmacy"
                                     v-model="_patient.pharmacy"
-                                    @keydown.enter.exact.prevent="save" />
+                                    readonly />
                             </v-col>
                         </v-row>
                     </v-form>
@@ -250,14 +199,8 @@
                         :disabled="isPending"
                         :elevation="!isPending ? 4 : 0"
                         variant="flat"
-                        @click.stop="save">
-                        {{ txt.buttons.ok }}
-                    </v-btn>
-                    <v-btn
-                        :disabled="isPending"
-                        color="secondary"
                         @click.stop="close">
-                        {{ txt.buttons.cancel }}
+                        {{ txt.buttons.close }}
                     </v-btn>
                 </v-card-actions>
             </v-card>

@@ -2,7 +2,7 @@
 import { useAppStore } from '@/stores/app';
 import { usePageStore } from '@/stores/page';
 
-  const { siteName } = storeToRefs(useAppStore());
+  const { txt } = storeToRefs(useAppStore());
   const { pages } = storeToRefs(usePageStore());
 </script>
 
@@ -10,7 +10,8 @@ import { usePageStore } from '@/stores/page';
   <v-footer
     class="w-100 d-flex justify-center flex-column text-center"
     style="bottom: 0px; position: fixed;">
-    <v-row no-gutters
+    <v-row v-if="pages.filter(p => p.isShow).length > 1"
+      no-gutters
       class="justify-center rounded-pill py-0 engrave">
       <v-btn
         v-for="(page, i) in pages.filter(p => p.isShow)"
@@ -24,9 +25,8 @@ import { usePageStore } from '@/stores/page';
         {{ page.title }}
       </v-btn>
     </v-row>
-      <v-col class="pt-2 pb-0 color-primary"
-        style="opacity: 0.7;">
-        {{ new Date().getFullYear() }} — <span class="brand-font">{{ siteName }}</span>
+      <v-col class="pt-2 pb-0 color-primary">
+        {{ new Date().getFullYear() }} — <span class="brand-font">{{ txt.labels.siteName }}</span>
       </v-col>
   </v-footer>
 </template>

@@ -78,6 +78,11 @@
                         icon="mdi-trash-can"
                         class="mx-3" />
                         {{ txt.headings.deletePatient }}
+                    <v-spacer />
+                    <v-btn 
+                        icon="mdi-close"
+                        style="background: transparent;"
+                        @click="close" />
                 </v-toolbar>
                 <v-card-text>
                     <v-progress-linear indeterminate color="primary" :style="isPending ? 'opacity: 1' : 'opacity: 0'"/>

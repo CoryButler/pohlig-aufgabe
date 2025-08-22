@@ -7,7 +7,15 @@ export interface Patient {
     birthdate: Date,
     firstName: string,
     lastName: string,
-    sex: string | undefined
+    sex: string | undefined,
+    phone?: string,
+    email?: string,
+    address?: string,
+    state?: string,
+    zip?: string,
+    country?: string,
+    insurance?: string,
+    pharmacy?: string
 }
 
 export const usePatientStore = defineStore("patientStore", () => {

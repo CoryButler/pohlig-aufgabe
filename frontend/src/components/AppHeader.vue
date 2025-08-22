@@ -3,7 +3,7 @@
     import { useAppStore } from '@/stores/app';
 
     /* Store variables */
-    const { brandIcon, isMenu, isMobile, siteName, tagLine, txt } = storeToRefs(useAppStore());
+    const { brandIcon, isMobile, txt } = storeToRefs(useAppStore());
 
     /* Private variables */
     const _display = useDisplay();
@@ -14,24 +14,23 @@
 </script>
 
 <template>
-    <v-app-bar>
-        <template v-slot:prepend>
-            <v-expand-x-transition>
-                <div v-show="isMobile">
-                    <v-app-bar-nav-icon
-                        color="primary"
-                        style="background: transparent; "
-                        @click="isMenu = !isMenu" />
+    <v-app-bar
+        class="px-3">
+        <v-app-bar-title>
+            <div class="d-flex align-center">
+                <v-icon
+                    :icon="brandIcon"
+                    class="mr-1"
+                    color="primary"
+                    size="x-large" />
+                <div>
+                    <p class="brand-font color-primary mb-n1">
+                        {{ txt.labels.siteName }}
+                    </p>
+                    <p class="text-caption color-secondary font-italic">
+                        {{ txt.labels.tagLine }}
+                    </p>
                 </div>
-            </v-expand-x-transition>
-        </template>
-        <v-app-bar-title :class="isMobile ? 'ml-0' : 'ml-3'">
-            <div>
-                <p class="brand-font color-primary mb-n1 d-flex align-end">
-                    <v-icon :icon="brandIcon" color="primary" />
-                    {{ siteName }}
-                </p>
-                <p class="text-caption color-secondary font-italic">{{ tagLine }}</p>
             </div>
         </v-app-bar-title>
         <div class="d-flex align-center">
@@ -41,7 +40,7 @@
                 color="secondary"
                 style="background: transparent" />
             <div class="text-end">
-                <p>Klaudia Müller</p>
+                <p class="text-body-2">Klaudia Müller</p>
                 <p class="text-caption">
                     <span class="color-primary">
                         {{ txt.labels.patientServices }}

@@ -129,8 +129,12 @@ a {
     font-weight: bold;
 }
 
+.v-data-table__td {
+    background: rgb(var(--v-theme-surfaceLight)) !important;
+}
+
 .v-data-table__th {
-    background: var(--v-theme-surfaceDark) !important;
+    background: rgb(var(--v-theme-surfaceDark)) !important;
     height: 32px !important;
 }
 

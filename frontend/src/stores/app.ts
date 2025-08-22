@@ -10,10 +10,7 @@ export const useAppStore = defineStore("appStore", () => {
   const isDark = ref<boolean>(false);
   const isMobile = ref<any>();
   const isMenu = ref<boolean>(!isMobile.value);
-  const siteName = computed(() => { return 'Patientenverwaltungssystem'; });
-  const tagLine = computed(() => { return 'Pohlig Programmieraufgabe'; });
   const userLang = ref<string>(navigator.language.substring(0, 2));
-
   const txt = computed(() => { 
     const lang_id = userLang.value;
     switch (lang_id) {
@@ -28,7 +25,7 @@ export const useAppStore = defineStore("appStore", () => {
   ]);
 
   return {
-    brandIcon, isAdmin, isDark, isMenu, isMobile, langs, siteName, tagLine, txt, userLang
+    brandIcon, isAdmin, isDark, isMenu, isMobile, langs, txt, userLang
   };
 });
 
