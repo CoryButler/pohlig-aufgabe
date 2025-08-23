@@ -2,6 +2,7 @@ import { ref, computed } from "vue";
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { baseUrl } from "@/constants/app";
 import { useAppStore } from "./app";
+import { useSnackbarStore, stati } from './snackbar';
 
 export interface Patient {
     id: number,
@@ -23,6 +24,7 @@ export const usePatientStore = defineStore("patientStore", () => {
     /* Store variables */
     const appStore = useAppStore();
     const { txt } = storeToRefs(appStore);
+    const { setSnackbar } = useSnackbarStore();
 
     /* Private variables */
     const _isPending = ref<boolean>(false);
@@ -47,8 +49,49 @@ export const usePatientStore = defineStore("patientStore", () => {
         ];
     });
 
+    /**
+     * Set the current patient object to an empty patient object
+     */
     function setEmptyPatient(): void {
         _patient.value = { ..._emptyPatient.value };
+    }
+
+    /**
+     * Create a new patient via backend API
+     * 
+     * @param {Patient} tempPatient The patient data to be saved.
+     * @return {boolean} Success status
+     */
+    async function createPatient(tempPatient: Patient): Promise<boolean> {
+        let success: boolean = false;
+        try {
+            _isPending.value = true;
+            const response = await fetch(`${baseUrl}/patients`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(tempPatient)
+            });
+            
+            setSnackbar({
+                type: response.ok ? stati.SUCCESS : stati.ERROR,
+                text: response.ok
+                    ? `${txt.value.snackBars.success}: ${txt.value.snackBars.patient.created}`
+                    : `${txt.value.snackBars.error}: ${txt.value.snackBars.patient.notCreated}`,
+            });
+
+            if (!response.ok) throw new Error();
+
+            const data = await response.json();
+            _patient.value = { ...data };
+            success = true;
+        }
+        catch {
+            console.error(`${txt.value.snackBars.error}: ${txt.value.snackBars.patient.notCreated}`, tempPatient);
+        }
+        finally {
+            _isPending.value = false;
+            return success;
+        }
     }
 
     /** 
@@ -59,12 +102,12 @@ export const usePatientStore = defineStore("patientStore", () => {
             _isPending.value = true;
             const response = await fetch(`${baseUrl}/patients`);
 
-            if (!response.ok) throw new Error('Failed to read patients');
+            if (!response.ok) throw new Error();
 
             const data = await response.json();
             _patients.value = [ ...data ];
         } catch (error) {
-            console.error('Error fetching patients:', error);
+            console.error(`${txt.value.snackBars.error}: ${txt.value.snackBars.patient.notRead}`, error);
             _patients.value = [];
         }
         finally {
@@ -93,43 +136,17 @@ export const usePatientStore = defineStore("patientStore", () => {
             const data = await response.json();
             _patient.value = { ...data };
         }
-        catch {
-            console.error('Error fetching patient with ID:', id);
+        catch {      
+            setSnackbar({
+                type: stati.ERROR,
+                text: `${txt.value.snackBars.error}: ${txt.value.snackBars.patient.notRead}`,
+            });
+
+            console.error(`${txt.value.snackBars.error}: ${txt.value.snackBars.patient.notRead} — patientID:`, id);      
             setEmptyPatient();
         }
         finally {
             _isPending.value = false;
-        }
-    }
-
-    /**
-     * Create a new patient via backend API
-     * 
-     * @param {Patient} tempPatient The patient data to be saved.
-     * @return {boolean} Success status
-     */
-    async function createPatient(tempPatient: Patient): Promise<boolean> {
-        let success: boolean = false;
-        try {
-            _isPending.value = true;
-            const response = await fetch(`${baseUrl}/patients`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(tempPatient)
-            });
-
-            if (!response.ok) throw new Error();
-
-            const data = await response.json();
-            _patient.value = { ...data };
-            success = true;
-        }
-        catch {
-            console.error('Error creating patient:', tempPatient);
-        }
-        finally {
-            _isPending.value = false;
-            return success;
         }
     }
 
@@ -148,6 +165,13 @@ export const usePatientStore = defineStore("patientStore", () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(tempPatient)
             });
+            
+            setSnackbar({
+                type: response.ok ? stati.SUCCESS : stati.ERROR,
+                text: response.ok
+                    ? `${txt.value.snackBars.success}: ${txt.value.snackBars.patient.updated}`
+                    : `${txt.value.snackBars.error}: ${txt.value.snackBars.patient.notUpdated}`,
+            });
 
             if (!response.ok) throw new Error();
 
@@ -156,7 +180,7 @@ export const usePatientStore = defineStore("patientStore", () => {
             success = true;
         }
         catch {
-            console.error('Error updating patient:', tempPatient);
+            console.error(`${txt.value.snackBars.error}: ${txt.value.snackBars.patient.notUpdated}`, tempPatient);
         }
         finally {
             _isPending.value = false;
@@ -173,6 +197,13 @@ export const usePatientStore = defineStore("patientStore", () => {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             });
+            
+            setSnackbar({
+                type: response.ok ? stati.SUCCESS : stati.ERROR,
+                text: response.ok
+                    ? `${txt.value.snackBars.success}: ${txt.value.snackBars.patient.deleted}`
+                    : `${txt.value.snackBars.error}: ${txt.value.snackBars.patient.notDeleted}`,
+            });
 
             if (!response.ok) throw new Error();
 
@@ -180,7 +211,7 @@ export const usePatientStore = defineStore("patientStore", () => {
             _patient.value = { ...data };
             success = true;
         } catch {
-            console.error('Error deleting patient:', _patient.value);
+            console.error(`${txt.value.snackBars.error}: ${txt.value.snackBars.patient.notDeleted}`, _patient.value);
         }
         finally {
             _isPending.value = false;

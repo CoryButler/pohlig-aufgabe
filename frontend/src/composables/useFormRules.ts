@@ -4,7 +4,7 @@ const { txt } = storeToRefs(useAppStore());
 
 export const useFormRules = () => {
 	return {
-		emailRequired: (v: string) => {
+		emailValid: (v: string) => {
 			const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			return (v === undefined || v === null || v.trim() === '' || pattern.test(v)) || txt.value.messages.emailValid;
 		},

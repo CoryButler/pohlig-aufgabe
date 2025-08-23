@@ -54,10 +54,27 @@
         "male": "Male",
         "female": "Female"
     },
+    "snackBars": {
+        "error": "Error",
+        "info": "Info",
+        "success": "Success",
+        "warning": "Warning",
+        "patient": {
+            "created": "patient created",
+            "read": "patient read",
+            "updated": "patient updated",
+            "deleted": "patient deleted",
+            "notCreated": "could not create patient",
+            "notRead": "could not read patient",
+            "notUpdated": "could not update patient",
+            "notDeleted": "could not delete patient"
+        }
+    },
     "units": {
         "years": "yr."
     },
     "messages": {
+        "intro": "Welcome to the patient management application!<br><br>Use the <strong>\"settings button <i class=\"mdi-cog mdi v-icon notranslate v-theme--theme_light v-icon--size-x-small\" style=\"background: transparent;\" aria-hidden=\"true\"></i>\"</strong> at the top right to switch between admin and normal accounts or to change the app theme and language.<br><br>The normal account can only read patients.  The admin account can create, read, update, and delete patients.<br><br>For this demo, these are not actually separate accounts.  This is just a setting used to simulate multiple accounts.",
         "deletePatient": "Are you sure you want to delete this patient?",
         "emailValid": "Must be a valid E-mail",
         "positiveFloat": "Must be a positive number",

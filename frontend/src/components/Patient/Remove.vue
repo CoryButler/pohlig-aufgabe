@@ -73,7 +73,7 @@
             <v-card
                 v-bind="isActive"
                 :disabled="isPending">
-                <v-toolbar>
+                <v-toolbar color="error">
                     <v-icon 
                         icon="mdi-trash-can"
                         class="mx-3" />

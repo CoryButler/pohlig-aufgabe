@@ -11,6 +11,7 @@ declare module 'vue' {
     AppFooter: typeof import('./components/App/Footer.vue')['default']
     AppHeader: typeof import('./components/App/Header.vue')['default']
     AppSettings: typeof import('./components/App/Settings.vue')['default']
+    AppSnackBar: typeof import('./components/App/Snackbar.vue')['default']
     DatePicker: typeof import('./components/DatePicker.vue')['default']
     Details: typeof import('./components/Patient/Details.vue')['default']
     Editor: typeof import('./components/Patient/Editor.vue')['default']
@@ -25,5 +26,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Settings: typeof import('./components/App/Settings.vue')['default']
+    Snackbar: typeof import('./components/App/Snackbar.vue')['default']
+    SnackBar: typeof import('./components/App/Snackbar.vue')['default']
   }
 }

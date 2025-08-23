@@ -154,13 +154,13 @@ export const updatePatient = (req: Request, res: Response, next: NextFunction): 
         // Check if patient exists
         if (!validId(id, res)) return;
 
-        let patient: Patient = patients.find(p => p.id === id);
+        const index: number = patients.findIndex(p => p.id === id);
 
         // Build patient object with next available id
-        patient = { ...buildPatientFromRequest(req), id: _primaryKey++ };
+        patients[index] = { ...buildPatientFromRequest(req), id: _primaryKey++ };
 
         // Respond with the updated patient
-        res.status(stati.OK).json(patient);
+        res.status(stati.OK).json(patients[index]);
     }
     catch (error) {
         next(error);

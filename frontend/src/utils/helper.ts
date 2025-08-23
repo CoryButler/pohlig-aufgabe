@@ -8,3 +8,8 @@ export const getAge = function (birthdate: Date): number {
     
     return age;
 }
+
+export const numbersOnly = function (evt: any) {
+  if (evt.ctrlKey || evt.key.length > 1 || /[0-9]/.test(evt.key)) return;
+  evt.preventDefault();
+}

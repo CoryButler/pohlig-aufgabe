@@ -3,7 +3,7 @@
     import { usePatientStore, type Patient } from '@/stores/patient';
     import DatePicker from '@/components/DatePicker.vue';
     import { useFormRules } from '@/composables/useFormRules';
-    import { getAge } from '@/utils/helper';
+    import { getAge, numbersOnly } from '@/utils/helper';
 
     /* Store variables */
     const appStore = useAppStore();
@@ -11,7 +11,7 @@
     const patientStore = usePatientStore();
     const { isPending, patient, sexes } = storeToRefs(patientStore);
     const { createPatient, readPatientById, updatePatient } = patientStore;
-    const { positiveInt, positiveFloat, required } = useFormRules();
+    const { emailValid, positiveFloat, required } = useFormRules();
 
     const state = reactive({
         resolve: (val: boolean) => {},
@@ -108,7 +108,7 @@
             <v-card
                 v-bind="isActive"
                 :disabled="isPending">
-                <v-toolbar>
+                <v-toolbar :color=" _patient.id <= 0 ? 'primary' : 'warning'">
                     <v-icon 
                         :icon="_patient.id <= 0 ? 'mdi-account-plus' : 'mdi-account-edit'"
                         class="mx-3" />
@@ -183,6 +183,7 @@
                                 <v-text-field
                                     :label="txt.fields.phone"
                                     v-model="_patient.phone"
+                                    @keydown="(evt: any) => numbersOnly(evt)"
                                     @keydown.enter.exact.prevent="save" />
                             </v-col>
                             <v-col :cols="isMobile ? 12 : 6"
@@ -190,6 +191,7 @@
                                 <v-text-field
                                     :label="txt.fields.email"
                                     v-model="_patient.email"
+                                    :rules="[emailValid]"
                                     @keydown.enter.exact.prevent="save" />
                             </v-col>
                         </v-row>
@@ -215,6 +217,7 @@
                                 <v-text-field
                                     :label="txt.fields.zip"
                                     v-model="_patient.zip"
+                                    @keydown="(evt: any) => numbersOnly(evt)"
                                     @keydown.enter.exact.prevent="save" />
                             </v-col>
                             <v-col cols="4"

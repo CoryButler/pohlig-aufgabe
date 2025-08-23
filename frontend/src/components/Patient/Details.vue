@@ -68,7 +68,7 @@
             <v-card
                 v-bind="isActive"
                 :disabled="isPending">
-                <v-toolbar>
+                <v-toolbar color="primary">
                     <v-icon 
                         icon="mdi-account-details"
                         class="mx-3" />

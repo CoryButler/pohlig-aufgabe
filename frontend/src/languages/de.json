@@ -54,10 +54,27 @@
         "male": "Männlich",
         "female": "Weiblich"
     },
+    "snackBars": {
+        "error": "Fehler",
+        "info": "Info",
+        "success": "Erfolg",
+        "warning": "Warnung",
+        "patient": {
+            "created": "Patient angelegt",
+            "read": "Patient gelesen",
+            "updated": "Patient aktualisiert",
+            "deleted": "Patient gelöscht",
+            "notCreated": "Patient konnte nicht angelegt werden",
+            "notRead": "Patient konnte nicht gelesen werden",
+            "notUpdated": "Patient konnte nicht aktualisiert werden",
+            "notDeleted": "Patient konnte nicht gelöscht werden"
+        }
+    },
     "units": {
         "years": "J."
     },
     "messages": {
+        "intro": "Willkommen bei der Patientenverwaltungsanwendung!<br><br>Verwenden Sie die <strong>„Einstellungen Schaltfläche <i class=\"mdi-cog mdi v-icon notranslate v-theme--theme_light v-icon--size-x-small\" style=\"background: transparent;\" aria-hidden=\"true\"></i>“</strong> oben rechts, um zwischen Admin- und normalen Konten zu wechseln oder um das App-Thema und die Sprache zu ändern.<br><br>Das normale Konto kann Patienten nur lesen.  Das Adminkonto kann Patienten erstellen, lesen, aktualisieren und löschen.<br><br>Für diese Demo handelt es sich nicht um separate Konten.  Dies ist lediglich eine Einstellung, die zur Simulation mehrerer Konten verwendet wird.",
         "deletePatient": "Sind Sie sicher, dass Sie diesen Patienten löschen möchten?",
         "emailValid": "Muss eine gültige Email-Adresse sein",
         "positiveFloat": "Muss eine positive Zahl sein",
