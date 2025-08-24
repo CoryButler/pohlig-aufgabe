@@ -1,8 +1,12 @@
 # pohlig-aufgabe
 
+This project is a patient management system designed to help healthcare providers efficiently manage patient records and information. It features a modern frontend built with Vue and a backend powered by Express, supporting CRUD operations. The system enables easy organization and editing of patient details in a user-friendly interface.
+
 ## Tech/Frameworks
 
 [Express](https://expressjs.com/)
+
+[Yup (schema builder)](https://github.com/jquense/yup)
 
 [Pinia (state management)](https://pinia.vuejs.org/)
 
@@ -71,3 +75,16 @@ pohlig-aufgabe/
 │
 └── ... 
 ```
+
+## TODO
+
+If this project is developed further, the following improvements should be implemented.
+
+- Convert backend JSON to a database
+- Develop robust backend validation
+- Improve API documentation with Swagger
+- Create a table for insurances and pharmacies
+  - Then update the UI form to use v-select elements
+- Make a notes editor to add custom comments on each patient
+  - Update patients table
+- Include addition filtering and search features

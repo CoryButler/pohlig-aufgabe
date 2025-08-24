@@ -39,8 +39,11 @@
         { title: '', key: 'action', align: 'end', sortable: false }
     ]);
 
+    /**
+     * Set the search term for filtering the patients table.
+     */
     function setSearchTerm(): void {
-        _searchTerm.value = _tempSearchTerm.value;
+        _searchTerm.value = _tempSearchTerm.value.trim();
     }
 
     /**
