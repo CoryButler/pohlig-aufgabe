@@ -22,6 +22,8 @@ Open two terminals:  one for the backend and one for the frontend
 
 ### Backend
 
+Runs on port 5000
+
 ```bash
 # cd into .\pohlig-aufgabe\backend\
 npm install
@@ -29,6 +31,8 @@ npm run dev # runs backend on http://localhost:5000
 ```
 
 ### Frontend
+
+Runs on port 8080
 
 ```bash
 #  cd into .\pohlig-aufgabe\frontend\
