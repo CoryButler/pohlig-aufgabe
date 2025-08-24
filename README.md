@@ -39,13 +39,15 @@ npm run dev # runs frontend on http://localhost:8080
 ## Project Structure
 ```
 pohlig-aufgabe/
-├── backend/ # Node.js backend
+├── backend/                    # Node.js backend
 │   ├── src/
-│   │   ├── config/         # Server configuration
-│   │   ├── controllers/    # Webservice controllers
-│   │   ├── middleware/     # Custom middleware
-│   │   ├── models/         # Data models
-│   │   ├── routes/         # API routes
+│   │   ├── config/             # Server configuration
+│   │   ├── controllers/        # Webservice controllers
+│   │   ├── middleware/         # Custom middleware
+│   │   ├── models/             # Data models
+│   │   ├── routes/             # API routes
+│   │   ├── schemas/            # Validation schemas
+│   │   ├── utils/              # Validation schemas
 │   │   ├── app.ts
 │   │   └── server.ts
 │   │
@@ -53,21 +55,24 @@ pohlig-aufgabe/
 │   └── ...
 │
 ├── frontend/ # Frontend framework
-│   ├── public/             # URI-accessable resources (favicon.ico)
+│   ├── public/                 # URI-accessable resources (favicon.ico)
 │   ├── src/
-│   │   ├── assets/         # Preloaded image storage
-│   │   ├── components/     # Vue template files
-│   │   ├── composables/    # Functions that leverage Vue's Composition API
-│   │   ├── constants/      # Immutable global variables
-│   │   ├── languages/      # JSON for each available language
-│   │   ├── layouts/        # Reusable components that wrap around pages
-│   │   ├── pages/          # Navigatable routes
-│   │   ├── plugins/        # Extend Vue application functionality
-│   │   ├── router/         # Setup Vue Router
-│   │   ├── stores/         # Pinia stores for state management
-│   │   ├── styles/         # Application styles configuring
-│   │   ├── util/           # Utiliy/helper functions
-│   │   ├── App.vue         # Application root
+│   │   ├── assets/             # Preloaded image storage (none used currently)
+│   │   ├── components/         # Vue template files
+│   │   │   ├── App/            # Application-wide UI
+│   │   │   ├── Patient/        # Patient-related UI
+│   │   │   └── DatePicker.vue  # Date Picker UI
+│   │   ├── composables/        # Functions that leverage Vue's Composition API
+│   │   ├── constants/          # Immutable global variables
+│   │   ├── languages/          # JSON for each available language
+│   │   ├── layouts/            # Reusable components that wrap around pages
+│   │   ├── pages/              # Navigatable routes
+│   │   ├── plugins/            # Extend Vue application functionality
+│   │   ├── router/             # Setup Vue Router
+│   │   ├── stores/             # Pinia stores for state management
+│   │   ├── styles/             # Application styles configuring
+│   │   ├── util/               # Utiliy/helper functions
+│   │   ├── App.vue             # Application root
 │   │   └── ...
 │   │
 │   ├── package.json
